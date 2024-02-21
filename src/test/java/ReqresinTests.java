@@ -2,8 +2,6 @@
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.is;
-
-import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.Test;
 
 public class ReqresinTests {
