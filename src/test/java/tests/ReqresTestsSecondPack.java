@@ -1,16 +1,9 @@
+package tests;
+
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.*;
-
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import testdata.TestData;
-
-import javax.print.attribute.standard.DateTimeAtCreation;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Date;
 
 public class ReqresTestsSecondPack {
 
