@@ -3,5 +3,5 @@ package model.lombok;
 import lombok.Data;
 @Data
 public class CreateUserResponseLombokModel {
-    String name,job,id,createdAt;
+    String name,job,id,createdAt,updatedAt;
 }

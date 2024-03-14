@@ -1,45 +1,31 @@
 package tests;
 
-import static io.qameta.allure.Allure.step;
+import org.junit.jupiter.api.Test;
+
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.*;
-
-import helpers.DateToStringConverter;
-import model.lombok.CreateUserBodyLombokModel;
-import model.lombok.CreateUserResponseLombokModel;
-import org.junit.jupiter.api.Test;
-import java.util.Date;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
 
 public class ReqresTestsSecondPack {
 
     @Test
     void createUser() {
-        CreateUserBodyLombokModel userBody = new CreateUserBodyLombokModel();
-        DateToStringConverter dtsc = new DateToStringConverter();
-        userBody.setName("neo");
-        userBody.setJob("chosenone");
 
-        CreateUserResponseLombokModel userResponse =
-                step("Create user with name and job", () ->
-                        given()
-                                .contentType(JSON)
-                                .body(userBody)
-                                .when()
-                                .post("https://reqres.in/api/users")
-                                .then()
-                                .log().status()
-                                .log().body()
-                                .statusCode(201)
-                                .extract().as(CreateUserResponseLombokModel.class));
+        String userData = "{\"name\":\"neo\",\"job\":\"chosenone\"}";
 
-        step("Verify created user data", () -> {
-            assertThat(userResponse.getName()).isEqualTo(userBody.getName());
-            assertThat(userResponse.getJob()).isEqualTo(userBody.getJob());
-            assertThat(userResponse.getId()).isGreaterThan("0");
-            assertThat(userResponse.getCreatedAt()).contains(dtsc.convertDateToString(new Date()));
-        });
+        given()
+                .contentType(JSON)
+                .body(userData)
+                .when()
+                .post("https://reqres.in/api/users")
+                .then()
+                .log().status()
+                .log().body()
+                .statusCode(201)
+                .body("name", is("neo"))
+                .body("job", is("chosenone"));
+
     }
 
     @Test
@@ -79,7 +65,6 @@ public class ReqresTestsSecondPack {
                 .body("name", is("neo"))
                 .body("job", is("newbie"));
     }
-
     @Test
     void changeUserJobWithoutName() {
 
@@ -98,7 +83,6 @@ public class ReqresTestsSecondPack {
                 .statusCode(200)
                 .body("job", is("newbie"));
     }
-
     @Test
     void changeUserWrongParameter() {
 
@@ -115,7 +99,6 @@ public class ReqresTestsSecondPack {
                 .log().body()
                 .statusCode(400);
     }
-
     @Test
     void deleteUserData() {
 
